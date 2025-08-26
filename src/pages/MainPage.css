@@ -1,0 +1,30 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+}
+
+.main-header h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 0;
+  color: #FFFFFF;
+}
+
+.main-header p {
+  font-size: 1.2rem;
+  color: #00EAD3; /* 포인트 색상 */
+  margin-top: 0.5rem;
+}
+
+.hexagon-grid {
+  margin-top: 4rem;
+  display: flex; /* Flexbox 사용 */
+  flex-wrap: wrap; /* 내용이 넘치면 다음 줄로 */
+  justify-content: center; /* 가운데 정렬 */
+  max-width: 800px;
+}

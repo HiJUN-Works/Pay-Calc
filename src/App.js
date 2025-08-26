@@ -1,24 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import MainPage from './pages/MainPage';
+import SalaryCalcPage from './pages/SalaryCalcPage';
+import SeveranceCalcPage from './pages/SeveranceCalcPage';
+import AnnualLeaveCalcPage from './pages/AnnualLeaveCalcPage';
+import InsuranceCalcPage from './pages/InsuranceCalcPage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/salary" element={<SalaryCalcPage />} />
+          <Route path="/severance" element={<SeveranceCalcPage />} />
+          <Route path="/annual-leave" element={<AnnualLeaveCalcPage />} />
+          <Route path="/insurance" element={<InsuranceCalcPage />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
