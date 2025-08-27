@@ -1,0 +1,49 @@
+.segmented-control {
+  display: flex;
+  background-color: #3a3a3e;
+  border-radius: 8px;
+  /* height: 50px;  */
+  /* 컨테이너의 높이를 40px로 고정합니다. */
+  box-sizing: border-box;
+  /* overflow: hidden; */
+}
+
+.segmented-control label {
+  flex: 1;
+  
+  /* label이 부모의 높이를 100% 채우도록 설정 */
+  height: 100%; 
+  
+  /* flexbox를 이용해 텍스트를 완벽하게 수직/수평 중앙 정렬 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  cursor: pointer;
+  border-radius: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-weight: 500;
+  color: #aaa;
+}
+
+/* 첫 번째 버튼의 왼쪽 모서리만 둥글게 처리 */
+.segmented-control label:first-of-type {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+/* 마지막 버튼의 오른쪽 모서리만 둥글게 처리 */
+.segmented-control label:last-of-type {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.segmented-control label.active {
+  background-color: #555;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.segmented-control input[type="radio"] {
+  display: none;
+}
