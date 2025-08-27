@@ -12,7 +12,7 @@
   flex: 1;
   
   /* label이 부모의 높이를 100% 채우도록 설정 */
-  height: 100%; 
+  margin-bottom: 0rem;
   
   /* flexbox를 이용해 텍스트를 완벽하게 수직/수평 중앙 정렬 */
   display: flex;

@@ -96,13 +96,21 @@
 .form-group label {
   display: block;
   font-weight: 600;
-  margin-bottom: 0rem;
+  margin-bottom: 0.75rem;
   color: #EAEAEA;
 }
 
 .form-group-inline {
   display: flex;
   gap: 2rem;
+  align-items: flex-start; /* 상단 정렬 추가 */
+}
+
+.form-group-inline .form-group {
+  /* width: calc(50% - 1rem);  */
+  /* flex-basis: 50%;
+  flex-grow: 1; */
+  flex: 1;
 }
 
 .salary-input {
@@ -114,10 +122,22 @@
   color: #FFFFFF;
   font-size: 1.1rem;
   box-sizing: border-box;
+  text-align: right;
+  transition: padding-right 0.3s ease;
 }
 
 .salary-input::placeholder {
   color: #555;
+}
+
+.salary-input::-webkit-outer-spin-button,
+.salary-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.salary-input[type=number] {
+  -moz-appearance: textfield;
 }
 
 .button-group {
@@ -152,3 +172,59 @@
 .button-secondary:hover {
   background-color: #4a4a4e;
 }
+
+.quick-add-buttons {
+  display: flex;
+  justify-content: flex-end; /* 버튼들을 오른쪽으로 정렬 */
+  gap: 0.5rem; /* 버튼 사이 간격 */
+  margin-top: 0.75rem; /* 입력창과의 간격 */
+}
+
+.quick-add-btn {
+  background-color: #3a3a3e;
+  color: #EAEAEA;
+  border: 1px solid #555;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.quick-add-btn:hover {
+  background-color: #4a4a4e;
+}
+
+.divider {
+  height: 3px;
+  background-color: #3a3a3e;
+  margin: 1rem 0;
+}
+
+.form-divider {
+    margin: 1rem 0;
+}
+
+.salary-input {
+  width: 100%;
+}
+
+.input-wrapper {
+  position: relative; /* '원' 글자를 위치시킬 기준점 */
+  display: flex;
+  align-items: center;
+}
+
+.unit-label {
+  position: absolute; /* 입력창 위에 떠 있도록 설정 */
+  right: 16px; /* 오른쪽 여백 */
+  color: #EAEAEA; /* 회색조 글씨 */
+  font-weight: 500;
+  pointer-events: none; /* '원' 글자가 클릭되지 않도록 설정 */
+}
+
+.input-with-unit {
+  padding-right: 30px; /* '원' 글자가 들어갈 공간 확보 */
+}
+
