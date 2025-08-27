@@ -1,0 +1,27 @@
+.tooltip-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 5px; /* 아이콘과 텍스트 사이 간격 */
+  cursor: pointer;
+}
+
+.tooltip-icon {
+  color: #888; /* 아이콘 색상 */
+}
+
+.tooltip-box {
+  position: absolute;
+  top: 100%; /* 아이콘 아래에 표시 */
+  left: 50%;
+  transform: translateX(-50%); /* 중앙 정렬 */
+  background-color: #3a3a3e;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  z-index: 10; /* 다른 요소 위에 표시 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 5px; /* 아이콘과의 여백 */
+}

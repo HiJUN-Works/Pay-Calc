@@ -4,6 +4,8 @@ import { ArrowLeft } from 'react-feather';
 import './SalaryCalcPage.css';
 import SegmentedControl from '../components/SegmentedControl';
 import NumberInput from '../components/NumberInput';
+import { calculateSalary } from '../utils/calculation';
+import Tooltip from '../components/Tooltip';
 
 const SalaryCalcPage = () => {
   // 입력값들을 관리할 state
@@ -14,6 +16,7 @@ const SalaryCalcPage = () => {
   const [children, setChildren] = useState(0);
   const [nonTaxable, setNonTaxable] = useState('200000');
   const [focusedInput, setFocusedInput] = useState('');
+  const [results, setResults] = useState(null);
 
   // 콤마를 제거하고 숫자만 state에 저장하는 함수
   const handleNumericChange = (setter, value) => {
@@ -30,6 +33,23 @@ const SalaryCalcPage = () => {
     const currentSalary = Number(salary || 0);
     // 더한 값을 다시 문자열로 변환하여 state 업데이트
     setSalary(String(currentSalary + amount));
+  };
+
+  const handleReset = () => {
+    setSalaryType('annual');
+    setSeveranceType('separate');
+    setSalary('');
+    setDependents(1);
+    setChildren(0);
+    setNonTaxable('200000');
+    setFocusedInput('');
+    setResults(null); // 결과도 초기화
+  };
+
+  const handleCalculate = () => {
+    const inputs = { salaryType, severanceType, salary, dependents, children, nonTaxable };
+    const calculatedResults = calculateSalary(inputs);
+    setResults(calculatedResults);
   };
 
   return (
@@ -121,13 +141,75 @@ const SalaryCalcPage = () => {
         </div>
 
         <div className="button-group">
-          <button className="button-secondary">초기화</button>
-          <button className="button-primary">계산하기</button>
+          <button onClick={handleReset} className="button-secondary">초기화</button>
+          <button onClick={handleCalculate} className="button-primary">계산하기</button>
         </div>
       </div>
 
       <div className="calculator-card result-card">
-        {/* 결과 표시 영역은 다음 단계에서 구현합니다. */}
+          {results ? (
+            <>
+              <div className="result-section">
+                <p className="result-label">월 예상 실수령액</p>
+                <p className="result-amount net-salary">{results.netSalary.toLocaleString()}원</p>
+              </div>
+              <div className="divider"></div>
+              <div className="result-section">
+                <p className="result-label">한 달 기준 공제액</p>
+                <ul className="deduction-list">
+                  <li>
+                    <span>
+                      국민연금
+                      <Tooltip text="[과세금액 * 4.5%]"/>
+                    </span> 
+                    <span>{results.National_Pension.toLocaleString()}원</span>
+                  </li>
+                  <li>
+                    <span>
+                      건강보험 (3.545%) 
+                      <Tooltip text="[과세금액 * 3.545%]"/>
+                    </span> 
+                    <span>{results.National_Health_Insur.toLocaleString()}원</span>
+                  </li>
+                  <li>
+                    <span>
+                      장기요양 
+                      <Tooltip text="[건강보험료 * 12.95%]"/>
+                    </span> 
+                    <span>{results.Long_Care_Insur.toLocaleString()}원</span>
+                  </li>
+                  <li>
+                    <span>
+                      고용보험
+                      <Tooltip text="[(과세금액 - 비과세액) * 0.9%]"/>
+                    </span> 
+                    <span>{results.Employ_Insur.toLocaleString()}원</span>
+                  </li>
+                  <li>
+                    <span>
+                      소득세 
+                      <Tooltip text="[간이세액표 및 부양 가족 수, 20세 이사 자녀 수 기준]"/>
+                    </span> 
+                    <span>{results.Incom_Tax.toLocaleString()}원</span>
+                  </li>
+                  <li>
+                    <span>
+                      지방소득세
+                      <Tooltip text="[소득세 * 10%]"/>
+                    </span> 
+                    <span>{results.Local_Incom_tax.toLocaleString()}원</span>
+                  </li>
+                </ul>
+                <div className="divider"></div>
+                <div className="total-deduction">
+                  <span>공제액 합계</span>
+                  <span className="total-deduction-amount">{results.Tax_Total.toLocaleString()}원</span>
+                </div>
+              </div>
+            </>
+          ) : (
+            <p className="no-result">계산기 버튼을 눌러주세요.</p>
+          )}
       </div>
     </div>
   );
