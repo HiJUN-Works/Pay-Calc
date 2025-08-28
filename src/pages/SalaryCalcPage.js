@@ -5,6 +5,7 @@ import './SalaryCalcPage.css';
 import SegmentedControl from '../components/SegmentedControl';
 import NumberInput from '../components/NumberInput';
 import { calculateSalary } from '../utils/calculation';
+import AlertModal from '../components/AlertModal';
 
 const SalaryCalcPage = () => {
   // 입력값들을 관리할 state
@@ -16,6 +17,8 @@ const SalaryCalcPage = () => {
   const [nonTaxable, setNonTaxable] = useState('200000');
   const [focusedInput, setFocusedInput] = useState('');
   const [results, setResults] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
   // 콤마를 제거하고 숫자만 state에 저장하는 함수
   const handleNumericChange = (setter, value) => {
@@ -51,9 +54,13 @@ const SalaryCalcPage = () => {
     setResults(calculatedResults);
   };
 
+  const showAlert = (message) => {
+    setModalMessage(message);
+    setIsModalOpen(true);
+  };
   const handleDependentsChange = (newDependents) => {
     if (newDependents <= children) {
-      alert("부양가족 수는 자녀 수보다 적을 수 없습니다.");
+      showAlert("부양가족 수는 자녀 수보다 적을 수 없습니다.");
       return;
     }
     setDependents(newDependents);
@@ -61,7 +68,7 @@ const SalaryCalcPage = () => {
 
   const handleChildrenChange = (newChildren) => {
     if (newChildren >= dependents) {
-      alert("자녀 수는 부양가족 수와 같거나 초과할 수 없습니다.");
+      showAlert("자녀 수는 부양가족 수와 같거나 초과할 수 없습니다.");
       return;
     }
     setChildren(newChildren);
@@ -131,7 +138,7 @@ const SalaryCalcPage = () => {
 
         <div className="form-group-inline">
           <div className="form-group">
-            <label>부양 가족 수</label>
+            <label>부양가족 수</label>
             <NumberInput value={dependents} onChange={handleDependentsChange} min={1} />
           </div>
           <div className="form-group">
@@ -218,6 +225,11 @@ const SalaryCalcPage = () => {
           </>
         </div>
       )}
+    <AlertModal 
+        isOpen={isModalOpen} 
+        message={modalMessage} 
+        onClose={() => setIsModalOpen(false)} 
+    />
     </div>
   );
 };
