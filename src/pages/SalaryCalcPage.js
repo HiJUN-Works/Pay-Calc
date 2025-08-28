@@ -5,7 +5,6 @@ import './SalaryCalcPage.css';
 import SegmentedControl from '../components/SegmentedControl';
 import NumberInput from '../components/NumberInput';
 import { calculateSalary } from '../utils/calculation';
-import Tooltip from '../components/Tooltip';
 
 const SalaryCalcPage = () => {
   // 입력값들을 관리할 state
@@ -51,6 +50,23 @@ const SalaryCalcPage = () => {
     const calculatedResults = calculateSalary(inputs);
     setResults(calculatedResults);
   };
+
+  const handleDependentsChange = (newDependents) => {
+    if (newDependents <= children) {
+      alert("부양가족 수는 자녀 수보다 적을 수 없습니다.");
+      return;
+    }
+    setDependents(newDependents);
+  };
+
+  const handleChildrenChange = (newChildren) => {
+    if (newChildren >= dependents) {
+      alert("자녀 수는 부양가족 수와 같거나 초과할 수 없습니다.");
+      return;
+    }
+    setChildren(newChildren);
+  };
+
 
   return (
     <div className="page-container">
@@ -116,11 +132,11 @@ const SalaryCalcPage = () => {
         <div className="form-group-inline">
           <div className="form-group">
             <label>부양 가족 수</label>
-            <NumberInput value={dependents} onChange={setDependents} min={1} />
+            <NumberInput value={dependents} onChange={handleDependentsChange} min={1} />
           </div>
           <div className="form-group">
-            <label>20세 이하 자녀 수</label>
-            <NumberInput value={children} onChange={setChildren} />
+            <label>만 8세~20세 자녀 수</label>
+            <NumberInput value={children} onChange={handleChildrenChange} />
           </div>
         </div>
 
@@ -146,71 +162,62 @@ const SalaryCalcPage = () => {
         </div>
       </div>
 
-      <div className="calculator-card result-card">
-          {results ? (
-            <>
-              <div className="result-section">
-                <p className="result-label">월 예상 실수령액</p>
-                <p className="result-amount net-salary">{results.netSalary.toLocaleString()}원</p>
+      
+      {results && (
+        <div className="calculator-card result-card">
+          <>
+            <div className="result-section net-salary-section">
+              <p className="result-label">월 예상 실수령액</p>
+              <div className="result-amount net-salary">
+                <span>{results.netSalary.toLocaleString()}</span>
+                <span className="unit">원</span>
               </div>
-              <div className="divider"></div>
-              <div className="result-section">
-                <p className="result-label">한 달 기준 공제액</p>
-                <ul className="deduction-list">
-                  <li>
+            </div>
+          
+            <div className="result-section">
+              <p className="result-label">예상 공제 내역</p>
+              <div className="deduction-columns"> 
+                {/* 왼쪽 열: 4대 보험 */}
+                <div className="column">
+                  <ul className="deduction-list">
+                    <li><span>국민연금</span> <span>{results.National_Pension.toLocaleString()}원</span></li>
+                    <li><span>건강보험</span> <span>{results.National_Health_Insur.toLocaleString()}원</span></li>
+                    <li><span>장기요양</span> <span>{results.Long_Care_Insur.toLocaleString()}원</span></li>
+                    <li><span>고용보험</span> <span>{results.Employ_Insur.toLocaleString()}원</span></li>
+                  </ul>
+                  <div className="sub-total">
+                    <span>소계</span>
                     <span>
-                      국민연금
-                      <Tooltip text="[과세금액 * 4.5%]"/>
-                    </span> 
-                    <span>{results.National_Pension.toLocaleString()}원</span>
-                  </li>
-                  <li>
+                      {(results.National_Pension + results.National_Health_Insur + results.Long_Care_Insur + results.Employ_Insur).toLocaleString()}원
+                    </span>
+                  </div>
+                </div>
+                {/* 오른쪽 열: 세금 */}
+                <div className="column">
+                  <ul className="deduction-list">
+                    <li><span>근로소득세</span> <span>{results.Incom_Tax.toLocaleString()}원</span></li>
+                    <li><span>지방소득세</span> <span>{results.Local_Incom_tax.toLocaleString()}원</span></li>
+                  </ul>
+                  {/* 세금 소계 추가 */}
+                  <div className="sub-total">
+                    <span>소계</span>
                     <span>
-                      건강보험 (3.545%) 
-                      <Tooltip text="[과세금액 * 3.545%]"/>
-                    </span> 
-                    <span>{results.National_Health_Insur.toLocaleString()}원</span>
-                  </li>
-                  <li>
-                    <span>
-                      장기요양 
-                      <Tooltip text="[건강보험료 * 12.95%]"/>
-                    </span> 
-                    <span>{results.Long_Care_Insur.toLocaleString()}원</span>
-                  </li>
-                  <li>
-                    <span>
-                      고용보험
-                      <Tooltip text="[(과세금액 - 비과세액) * 0.9%]"/>
-                    </span> 
-                    <span>{results.Employ_Insur.toLocaleString()}원</span>
-                  </li>
-                  <li>
-                    <span>
-                      소득세 
-                      <Tooltip text="[간이세액표 및 부양 가족 수, 20세 이사 자녀 수 기준]"/>
-                    </span> 
-                    <span>{results.Incom_Tax.toLocaleString()}원</span>
-                  </li>
-                  <li>
-                    <span>
-                      지방소득세
-                      <Tooltip text="[소득세 * 10%]"/>
-                    </span> 
-                    <span>{results.Local_Incom_tax.toLocaleString()}원</span>
-                  </li>
-                </ul>
-                <div className="divider"></div>
-                <div className="total-deduction">
-                  <span>공제액 합계</span>
-                  <span className="total-deduction-amount">{results.Tax_Total.toLocaleString()}원</span>
+                      {(results.Incom_Tax + results.Local_Incom_tax).toLocaleString()}원
+                    </span>
+                  </div>
+                  <div className="total-deduction-section">
+                    <p className="result-label">공제액 합계</p>
+                    <div className="total-deduction-amount">
+                      <span>{results.Tax_Total.toLocaleString()}</span>
+                      <span className="unit">원</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </>
-          ) : (
-            <p className="no-result">계산기 버튼을 눌러주세요.</p>
-          )}
-      </div>
+            </div>
+          </>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 .page-container {
   max-width: 700px;
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: 1rem 1rem;
 }
 
 .back-link {
@@ -23,7 +23,7 @@
 }
 
 .page-header {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
   text-align: center;
 }
 
@@ -44,10 +44,6 @@
   padding: 2rem;
   margin-bottom: 1.5rem;
 }
-
-/* .result-card { */
-  /* 결과 카드는 나중에 더 꾸밀 예정 */
-/* } */
 
 .segmented-control {
   display: flex;
@@ -144,7 +140,7 @@
   display: flex;
   gap: 1rem;
   justify-content: flex-end;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .button-group button {
@@ -226,5 +222,164 @@
 
 .input-with-unit {
   padding-right: 30px; /* '원' 글자가 들어갈 공간 확보 */
+}
+
+/* 월 예상 실수령액 섹션 스타일 (수정) */
+.net-salary-section {
+  background-color: #3a3a3e; /* 어두운 회색 배경 */
+  border: 2px solid #00EAD3;  /* 메인 포인트 색상 테두리 추가 */
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+/* 내부 라벨 스타일 수정 */
+.net-salary-section .result-label {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #EAEAEA; /* 흰색에 가까운 글씨 */
+  margin: 0;
+}
+
+/* 금액 표시 부분 스타일 수정 */
+.net-salary-section .result-amount {
+  display: flex;
+  align-items: baseline;
+  font-size: 2rem; /* 글자 크기를 대폭 키움 */
+  font-weight: 800; /* 글자를 훨씬 굵게 */
+  color: #FFFFFF; /* 완전한 흰색으로 강조 */
+  margin: 0;
+}
+
+/* '원' 단위 스타일 수정 */
+.net-salary-section .unit {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-left: 0.5rem;
+  color: #EAEAEA;
+}
+
+.deduction-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.deduction-list li {
+  display: flex; /* 가로 정렬을 위해 flex 사용 */
+  justify-content: space-between; /* 양쪽 끝으로 정렬 */
+  align-items: center;
+  padding: 1rem 0.5rem; /* 위아래, 좌우 여백 추가 */
+  border-bottom: 1px solid #3a3a3e; /* 항목을 구분하는 선 */
+}
+
+/* 마지막 항목에는 구분선을 제거하여 깔끔하게 마무리 */
+.deduction-list li:last-child {
+  border-bottom: none;
+}
+
+.deduction-list li span:first-child {
+  color: #aaa;
+  font-size: 1rem;
+}
+
+.deduction-list li span:last-child {
+  color: #EAEAEA;
+  font-weight: 600; /* 금액을 약간 더 굵게 */
+  font-size: 1rem;
+}
+
+.column {
+  flex: 1;       /* 두 열이 공간을 1:1 비율로 나눠 가짐 */
+  width: 50%;
+}
+
+.column:first-child {
+  padding-right: 2rem;
+  /* border-right: 1px solid #555; */
+}
+
+.deduction-columns {
+  display: flex; /* 자식 요소들을 가로로 배치 */
+  gap: 2rem;     /* 두 열 사이의 간격 */
+}
+
+.deduction-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.deduction-list li {
+  display: flex;
+  justify-content: space-between; /* 항목 이름과 금액을 양쪽 끝으로 정렬 */
+  padding: 0.5rem 0; /* 각 항목의 위아래 여백 */
+}
+
+.deduction-list li:last-child {
+  border-bottom: none;
+}
+
+.deduction-list li span:first-child {
+  color: #aaa;
+  font-size: 0.9rem; /* 폰트 살짝 줄임 */
+}
+
+.deduction-list li span:last-child {
+  color: #EAEAEA;
+  font-weight: 600;
+  font-size: 0.9rem; /* 폰트 살짝 줄임 */
+}
+
+.sub-total {
+  display: flex;
+  justify-content: space-between;
+  /* padding: 0.8rem 0.5rem; */
+  font-weight: 500;
+  /* border-top: 2px solid #555; 소계 윗선은 약간 굵게 */
+  margin-top: 0.5rem;
+  color: #eaeaea;
+}
+
+/* 공제액 합계 섹션 스타일 (월 예상 실수령액과 유사하게) */
+.total-deduction-section {
+  background-color: #3a3a3e;
+  border: 2px solid #555;
+  border-radius: 8px;
+  padding: 0.6rem 1rem; /* 내부 여백 축소 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem; /* 소계와의 간격 */
+}
+
+
+/* 내부 라벨 스타일 (월 예상 실수령액과 동일) */
+.total-deduction-section .result-label {
+  font-size: 1rem; /* 글자 크기 축소 */
+  font-weight: 500;
+  color: #EAEAEA;
+  margin: 0;
+}
+
+/* 금액 표시 부분 스타일 (월 예상 실수령액과 동일) */
+.total-deduction-section .total-deduction-amount {
+  display: flex;
+  align-items: baseline;
+  font-size: 1.2rem; /* 글자 크기 축소 */
+  font-weight: 500;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+/* '원' 단위 스타일 (월 예상 실수령액과 동일) */
+.total-deduction-section .unit {
+  font-size: 1rem; /* 글자 크기 축소 */
+  font-weight: 500;
+  margin-left: 0.5rem;
+  color: #EAEAEA;
 }
 

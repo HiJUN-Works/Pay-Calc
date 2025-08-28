@@ -2,7 +2,7 @@ import React from 'react';
 import { Minus, Plus } from 'react-feather';
 import './NumberInput.css';
 
-const NumberInput = ({ value, onChange, min = 0, max = 10 }) => {
+const NumberInput = ({ value, onChange, min = 0, max = 11 }) => {
   const handleDecrement = () => {
     if (value > min) {
       onChange(value - 1);
