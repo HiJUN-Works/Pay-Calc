@@ -16,7 +16,7 @@ const NumberInput = ({ value, onChange, min = 0, max = 11 }) => {
   };
 
   return (
-    <div className="number-input">
+    <div className="number-input">  
       <button onClick={handleDecrement} disabled={value <= min}>
         <Minus size={16} />
       </button>
