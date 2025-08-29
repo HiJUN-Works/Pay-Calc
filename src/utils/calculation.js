@@ -14,7 +14,7 @@ export const calculateSalary = (inputs) => {
   const pensionBase = Math.min(monthlyTaxable, pensionCap);
   const National_Pension = Math.floor((pensionBase * 0.045) / 10) * 10;
   const National_Health_Insur = Math.floor((monthlyTaxable * 0.03545) / 10) * 10;
-  const Long_Care_Insur = Math.floor((National_Health_Insur * 0.1295) / 10) * 10;
+  const Long_Care_Insur = Math.floor((National_Health_Insur * 0.06475) / 10) * 10;
   const Employ_Insur = Math.floor((monthlyTaxable * 0.009) / 10) * 10;
 
   // 3. 근로소득세 계산

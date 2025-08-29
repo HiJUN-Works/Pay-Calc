@@ -6,6 +6,8 @@ import SegmentedControl from '../components/SegmentedControl';
 import NumberInput from '../components/NumberInput';
 import { calculateSalary } from '../utils/calculation';
 import AlertModal from '../components/AlertModal';
+import Version from '../components/Version';
+import Accordion from '../components/Accordion';
 
 const SalaryCalcPage = () => {
   // 입력값들을 관리할 state
@@ -49,6 +51,10 @@ const SalaryCalcPage = () => {
   };
 
   const handleCalculate = () => {
+    if (!salary || Number(salary) === 0) {
+      showAlert('금액을 입력해주세요.'); 
+      return;
+    }
     const inputs = { salaryType, severanceType, salary, dependents, children, nonTaxable };
     const calculatedResults = calculateSalary(inputs);
     setResults(calculatedResults);
@@ -77,10 +83,13 @@ const SalaryCalcPage = () => {
 
   return (
     <div className="page-container">
-      <Link to="/" className="back-link">
-        <ArrowLeft size={24} />
-        <span>메인으로</span>
-      </Link>
+      <div className="page-top-bar">
+        <Link to="/" className="back-link">
+          <ArrowLeft size={24} />
+          <span>메인으로</span>
+        </Link>
+        <Version />
+      </div>
 
       <header className="page-header">
         <h2>연봉 실수령액 계산기</h2>
@@ -142,7 +151,7 @@ const SalaryCalcPage = () => {
             <NumberInput value={dependents} onChange={handleDependentsChange} min={1} />
           </div>
           <div className="form-group">
-            <label>만 8세~20세 자녀 수</label>
+            <label>8세~20세 자녀 수</label>
             <NumberInput value={children} onChange={handleChildrenChange} />
           </div>
         </div>
@@ -213,7 +222,7 @@ const SalaryCalcPage = () => {
                     </span>
                   </div>
                   <div className="total-deduction-section">
-                    <p className="result-label">공제액 합계</p>
+                    <p className="result-label">합계</p>
                     <div className="total-deduction-amount">
                       <span>{results.Tax_Total.toLocaleString()}</span>
                       <span className="unit">원</span>
@@ -225,11 +234,144 @@ const SalaryCalcPage = () => {
           </>
         </div>
       )}
-    <AlertModal 
-        isOpen={isModalOpen} 
-        message={modalMessage} 
-        onClose={() => setIsModalOpen(false)} 
-    />
+
+      {results && (
+        <Accordion title="연봉 계산기 안내사항">
+          <div className="info-section">
+            <h4 className="info-title-big">국민연금</h4>
+            <table className="info-table-detailed">
+              <thead>
+                <tr>
+                  <th>기준액</th>
+                  <th>전체 (근로자+사업주)</th>
+                  <th>근로자</th>
+                  <th>사업주</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>보수월액</td>
+                  <td>9%</td>
+                  <td>4.5%</td> 
+                  <td>4.5%</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colSpan="4">
+                    <p>※ 보수월액 = 월 소득 - 비과세액</p>
+                    <p>※ 기준소득월액의 상한액은 월 6,370,000원, 하한액은 월 400,000원 (2025.07 ~)</p>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <div className="info-section">
+            <h4 className="info-title-big">건강보험, 장기요양보험</h4>
+            <table className="info-table-detailed">
+              <thead>
+                <tr>
+                  <th>기준액</th>
+                  <th>전체 (근로자+사업주)</th>
+                  <th>근로자</th>
+                  <th>사업주</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>보수월액</td>
+                  <td>7.09%</td>
+                  <td>3.545%</td>
+                  <td>3.545%</td>
+                </tr>
+                <tr>
+                  <td>건강보험료</td>
+                  <td>12.95%</td>
+                  <td>6.475%</td>
+                  <td>6.475%</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colSpan="4">
+                    <p>※ 건강보험료의 상한액은 월 9,008,340원, 하한액은 월 19,780원 (2025.01 ~)</p>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <div className="info-section">
+            <h4 className="info-title-big">고용보험</h4>
+            <table className="info-table-detailed">
+              <thead>
+                <tr>
+                  <th>기준액</th>
+                  <th>전체 (근로자+사업주)</th>
+                  <th>근로자</th>
+                  <th>사업주</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>보수월액</td>
+                  <td>1.8%</td>
+                  <td>0.9%</td>
+                  <td>0.9%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className="info-section">
+            <h4 className="info-title-big">소득세</h4>
+            <table className="info-table-detailed">
+              <thead>
+                <tr>
+                  <th>구분</th>
+                  <th>기준액</th>
+                  <th>근로자</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>근로소득세</td>
+                  <td>보수월액</td>
+                  <td>간이세액표</td>
+                </tr>
+                <tr>
+                  <td>지방소득세</td>
+                  <td>근로소득세</td>
+                  <td>10%</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colSpan="4">
+                    <p>※ 간이세액표 = 국세청 근로소득 기준에 따라 부과되는 세금</p>
+                    <p>※ 부양가족 수, 8세 이상 20세 이하 자녀 수에 따라 추가 공제</p>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </Accordion>
+      )}
+
+
+
+      <AlertModal 
+          isOpen={isModalOpen} 
+          message={modalMessage} 
+          onClose={() => setIsModalOpen(false)} 
+      />
+      <footer className="page-footer">
+          <p>
+            ※ 본 계산기는 세전·세후 급여에 대한 이해를 돕기 위한 모의 계산으로, 
+            실제 수령액과 차이가 있을 수 있으니 참고용으로만 활용하세요.
+          </p>
+      </footer>
     </div>
   );
 };

@@ -1,0 +1,9 @@
+.version-display {
+  width: fit-content;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #aaa;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}

@@ -4,13 +4,20 @@
   padding: 1rem 1rem;
 }
 
-.back-link {
+.page-top-bar {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem; /* 헤더와의 간격 */
+}
+
+.back-link {
+  display: flex;  
   align-items: center;
   color: #EAEAEA;
   text-decoration: none;
   font-weight: 600;
-  margin-bottom: 2rem;
+  /* margin-bottom: 2rem; */
   transition: color 0.2s ease;
 }
 
@@ -76,7 +83,7 @@
 .section-title {
   font-size: 0.9rem;
   color: #888;
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 1rem 0;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -86,7 +93,7 @@
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .form-group label {
@@ -383,3 +390,96 @@
   color: #EAEAEA;
 }
 
+.page-footer {
+  margin-top: 2rem; /* 결과 카드와의 간격 */
+  padding-top: 0.5rem;
+  border-top: 1px solid #3a3a3e; /* 상단 구분선 */
+  text-align: center;
+}
+
+.page-footer p {
+  font-size: 0.8rem;
+  color: #888; /* 눈에 띄지 않는 회색 */
+  line-height: 1.6; /* 줄 간격 조정 */
+  margin: 0;
+}
+
+.info-section {
+  padding: 1rem; /* info-section의 내부 여백을 조정 */
+  margin-bottom: 0rem;
+}
+
+.info-title-big {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #EAEAEA;
+  margin: 0.5rem 0 0.5rem 0.5rem;
+}
+
+.info-table-detailed {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.info-table-detailed th, .info-table-detailed td {
+  border: 1px solid #46464b;
+  padding: 0.8rem;
+}
+
+.info-table-detailed th {
+  background-color: #46464b;
+  font-weight: 600;
+  color: #EAEAEA;
+}
+
+.info-table-detailed tbody td {
+  background-color: #343538;
+  color: #EAEAEA;
+}
+
+/* tfoot 스타일 추가 */
+.info-table-detailed tfoot td {
+  text-align: left;
+  font-size: 0.8rem;
+  color: #EAEAEA;
+  border: none;
+}
+
+.info-table-detailed tfoot p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+/* 화면 가로 크기가 480px 이하일 때 (모바일) */
+@media (max-width: 480px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+/* 화면 가로 크기가 380px 이하일 때 (모바일) */
+@media (max-width: 380px) {
+  html {
+    font-size: 10px;
+  }
+}
