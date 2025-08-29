@@ -92,7 +92,7 @@ const SalaryCalcPage = () => {
       </div>
 
       <header className="page-header">
-        <h2>연봉 실수령액 계산기</h2>
+        <h2>연봉 계산기</h2>
         <p>연봉/월급을 기준으로 실수령액을 계산합니다.</p>
       </header>
 
